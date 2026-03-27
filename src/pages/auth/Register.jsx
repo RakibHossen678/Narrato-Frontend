@@ -27,14 +27,17 @@ const Register = () => {
       const response = await apiRequestHandler(
         "/auth/register",
         "POST",
-        userData
+        userData,
       );
       return response;
     },
     onSuccess: (data) => {
-      if (data?.success) {
+      const token = data?.data?.token;
+      const user = data?.data?.user;
+
+      if (data?.success && token && user) {
         toast.success("Registered Successfully");
-        login(data?.user, data?.token);
+        login(user, token);
         navigate("/dashboard");
         reset();
       } else {
@@ -42,7 +45,11 @@ const Register = () => {
       }
     },
     onError: (error) => {
-      toast.error(error?.message || "Something went wrong");
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong",
+      );
     },
   });
 
@@ -57,8 +64,16 @@ const Register = () => {
       return;
     }
 
+    const normalizedEmail = String(data?.email || "")
+      .trim()
+      .toLowerCase();
+    const generatedUserName = `${normalizedEmail.split("@")[0] || "user"}${Date.now()
+      .toString()
+      .slice(-5)}`;
+
     const userData = {
-      email: data?.email,
+      userName: generatedUserName,
+      email: normalizedEmail,
       password: data?.password,
       recaptchaToken,
     };
@@ -67,17 +82,17 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center  justify-center min-h-screen font-jakarta">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg  lg:max-w-4xl">
-        {/* Form section */}
+    <div className="flex items-center justify-center min-h-screen font-jakarta">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg lg:max-w-4xl">
         <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
           <h1 className="md:text-2xl text-[18px] font-semibold text-secondary pb-4">
             Create Account
           </h1>
+
           <form onSubmit={handleSubmit(onSubmit)} className="md:mt-4 mt-2">
             <div>
               <label
-                className="block mb-1.5 text-xs md:text-sm  text-[#363636]"
+                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
                 htmlFor="email"
               >
                 Email Address
@@ -86,7 +101,7 @@ const Register = () => {
                 id="email"
                 type="email"
                 {...register("email", { required: "Email is required" })}
-                className={`bg-background-secondary  outline-none border border-border w-full h-12 md:h-14 pl-4 rounded-lg`}
+                className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 rounded-lg"
               />
               {errors.email && (
                 <p className="mt-1 text-xs text-red-600">
@@ -95,23 +110,25 @@ const Register = () => {
               )}
             </div>
 
-            <div className="lg:mt-8 md:mt-6 mt-3 ">
-              <div className="flex justify-between">
-                <label
-                  className="block mb-1.5 text-xs md:text-sm    text-[#363636]"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-              </div>
+            <div className="lg:mt-8 md:mt-6 mt-3">
+              <label
+                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
+                htmlFor="password"
+              >
+                Password
+              </label>
               <div className="relative">
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   {...register("password", {
                     required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
                   })}
-                  className={`bg-background-secondary  outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg`}
+                  className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg"
                 />
                 <button
                   type="button"
@@ -131,23 +148,22 @@ const Register = () => {
                 </p>
               )}
             </div>
+
             <div className="lg:mt-8 md:mt-6 mt-3">
-              <div className="flex justify-between">
-                <label
-                  className="block mb-1.5 text-xs md:text-sm   text-[#363636]"
-                  htmlFor="password"
-                >
-                  Confirm Password
-                </label>
-              </div>
+              <label
+                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
+                htmlFor="confirmPassword"
+              >
+                Confirm Password
+              </label>
               <div className="relative">
                 <input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   {...register("confirmPassword", {
-                    required: "Password is required",
+                    required: "Confirm Password is required",
                   })}
-                  className={`bg-background-secondary  outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg`}
+                  className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg"
                 />
                 <button
                   type="button"
@@ -167,6 +183,7 @@ const Register = () => {
                 </p>
               )}
             </div>
+
             <div className="mt-4 flex justify-center">
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
@@ -180,18 +197,16 @@ const Register = () => {
                 className="w-full cursor-pointer py-4 bg-primary text-sm font-semibold text-background rounded-md"
                 disabled={registerMutation.isPending}
               >
-                {registerMutation.isPending ? "Creating...." : "Create Account"}
+                {registerMutation.isPending ? "Creating..." : "Create Account"}
               </button>
             </div>
 
             <div className="flex items-center justify-between md:mt-6 mt-4">
               <span className="border-b-[#C8C8C8] border-b w-[40%]"></span>
-              <a href="#" className="text-xs text-tertiary">
-                or
-              </a>
+              <span className="text-xs text-tertiary">or</span>
               <span className="border-b-[#C8C8C8] border-b w-[40%]"></span>
             </div>
-            
+
             <p className="text-sm text-tertiary max-w-[250px] text-center mx-auto mb-6">
               By continuing you agree to the{" "}
               <span className="text-primary underline font-medium">
@@ -202,9 +217,10 @@ const Register = () => {
                 Terms & Condition
               </span>
             </p>
-            <p className="text-center text-tertiary text-sm ">
+
+            <p className="text-center text-tertiary text-sm">
               Already have an account?{" "}
-              <Link to={"/login"} className="text-primary underline">
+              <Link to="/login" className="text-primary underline">
                 Sign in
               </Link>
             </p>

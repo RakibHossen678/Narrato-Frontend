@@ -20,7 +20,7 @@ const ForgotPassword = () => {
       const response = await apiRequestHandler(
         "/auth/forgot-password",
         "POST",
-        data
+        data,
       );
       return response;
     },
@@ -31,16 +31,21 @@ const ForgotPassword = () => {
         localStorage.setItem("email", variables.email);
         navigate("/verify-otp");
         reset();
+      } else {
+        toast.error(data?.message || "Failed to send OTP");
       }
     },
 
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong",
+      );
     },
   });
 
   const onSubmit = async (data) => {
-    localStorage.setItem("email", data.email);
     await mutation.mutateAsync(data);
   };
 

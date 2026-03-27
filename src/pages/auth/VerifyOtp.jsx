@@ -17,7 +17,7 @@ const VerifyOtp = () => {
       const response = await apiRequestHandler(
         "/auth/verify-otp",
         "POST",
-        data
+        data,
       );
       return response;
     },
@@ -27,15 +27,27 @@ const VerifyOtp = () => {
         toast.success("Otp verified successfully");
         navigate("/reset-password");
         reset();
+      } else {
+        toast.error(data?.message || "Invalid OTP");
       }
     },
 
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong",
+      );
     },
   });
 
   const onSubmit = async (data) => {
+    if (!email) {
+      toast.error("Email session missing. Please request OTP again.");
+      navigate("/forgot-password");
+      return;
+    }
+
     const code = Object.values(data).join("");
     if (code.length !== 6) {
       toast.error("Please enter a valid code");

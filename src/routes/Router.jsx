@@ -25,6 +25,7 @@ const Router = () => {
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
       <Route path="forget-password" element={<ForgotPassword />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="verify-otp" element={<VerifyOtp />} />
       <Route path="reset-password" element={<ResetPassword />} />
     </Routes>

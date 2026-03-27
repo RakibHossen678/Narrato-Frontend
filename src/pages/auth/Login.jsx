@@ -8,7 +8,7 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
-  const { setUser, login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const planName = searchParams.get("plan_name");
@@ -43,14 +43,13 @@ const Login = () => {
 
       // Save user and token
       login(user, token);
-      setUser(user);
 
       // Default redirect
       navigate("/");
       reset();
     },
-    onError: () => {
-      toast.error("Sign in failed");
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Sign in failed");
     },
   });
 
@@ -122,7 +121,7 @@ const Login = () => {
                 </p>
               )}
               <Link
-                to="/forgot-password"
+                to="/forget-password"
                 className="text-xs md:text-sm  pt-1.5 text-tertiary "
               >
                 Forget Password?{" "}

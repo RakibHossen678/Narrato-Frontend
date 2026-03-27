@@ -56,21 +56,31 @@ const AuthProvider = ({ children }) => {
   // set user in local storage
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await apiRequestHandler(
-        "/user/profile",
-        "GET",
-        null,
-        localStorage.getItem("token")
-      );
-      localStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
-      return data;
+      try {
+        const { data } = await apiRequestHandler(
+          "/user/me",
+          "GET",
+          null,
+          localStorage.getItem("token"),
+        );
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(data);
+        return data;
+      } catch (_error) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+        setUserToken(null);
+        return null;
+      }
     };
-    fetchUser();
+
     const token = localStorage.getItem("token");
-    if (!isTokenExpired(token)) {
+    if (token && !isTokenExpired(token)) {
       setUserToken(token);
       fetchUser();
+    } else {
+      setUserToken(null);
     }
   }, []);
 

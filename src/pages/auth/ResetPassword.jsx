@@ -25,7 +25,7 @@ const ResetPassword = () => {
       const response = await apiRequestHandler(
         "/auth/reset-password",
         "POST",
-        data
+        data,
       );
       return response;
     },
@@ -34,21 +34,39 @@ const ResetPassword = () => {
       if (data?.success) {
         toast.success("Password Reset Successfully");
         localStorage.removeItem("email");
-        navigate("/");
+        navigate("/login");
         reset();
+      } else {
+        toast.error(data?.message || "Failed to reset password");
       }
     },
 
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong",
+      );
     },
   });
 
   const onSubmit = async (data) => {
+    if (!email) {
+      toast.error("Email session missing. Please request OTP again.");
+      navigate("/forgot-password");
+      return;
+    }
+
     if (data.newPassword !== data.confirmPassword) {
       toast.error("Password does not match");
       return;
     }
+
+    if (data.newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+
     const resetPassData = {
       email: email,
       newPassword: data.newPassword,
@@ -64,11 +82,10 @@ const ResetPassword = () => {
           className="py-10 md:px-6 px-5 shadow-[0px_4px_25px_0px_rgba(0,0,0,0.05)] rounded-2xl border border-border"
         >
           <h1 className="text-secondary font-semibold text-[18px] md:text-2xl ">
-            Forget Password
+            Reset Password
           </h1>
           <p className="py-3 md:py-4 text-xs md:text-sm text-tertiary">
-            Enter your email, and we’ll send you simple steps to reset your
-            password.
+            Set a strong new password for your account.
           </p>
           <hr className="border-none h-[1px] bg-border md:mb-10 mb-6" />
           <div className="mb-3">
