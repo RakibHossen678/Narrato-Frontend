@@ -1,12 +1,17 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
 
 :root {
-  --bg: #f5f6f8;
-  --ink: #0f172a;
-  --muted: #475569;
+  --bg: #f2f4f7;
+  --ink: #111827;
+  --muted: #4b5563;
   --panel: #ffffff;
-  --accent: #ea580c;
-  --accent-soft: #fff7ed;
+  --accent: #0f766e;
+  --accent-soft: #ccfbf1;
+  --border: #e5e7eb;
+  --ring: #99f6e4;
+  --headline-font: "Space Grotesk", "Segoe UI", sans-serif;
+  --body-font: "Manrope", "Segoe UI", sans-serif;
 }
 
 body {
@@ -23,7 +28,18 @@ body {
     ),
     var(--bg);
   color: var(--ink);
+  font-family: var(--body-font);
   min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--headline-font);
+  letter-spacing: -0.015em;
 }
 
 #root {
@@ -36,8 +52,89 @@ body {
   padding: 1rem;
 }
 
+@media (min-width: 768px) {
+  .narrato-shell {
+    padding: 1.25rem;
+  }
+}
+
 .narrato-card {
   background: var(--panel);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
   border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.08);
+}
+
+.narrato-section {
+  margin-block: 1rem;
+}
+
+@media (min-width: 768px) {
+  .narrato-section {
+    margin-block: 1.5rem;
+  }
+}
+
+.blog-card {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.15rem;
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.09);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.16);
+}
+
+.blog-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.blog-content {
+  font-size: 0.98rem;
+  color: #374151;
+}
+
+.blog-button {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-right: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.blog-button:hover {
+  background-color: var(--accent-soft);
+  border-color: var(--ring);
+}
+
+.surface-soft {
+  background: linear-gradient(160deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid var(--border);
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
 }

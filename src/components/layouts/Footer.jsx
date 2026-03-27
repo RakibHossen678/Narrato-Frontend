@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="mt-10 border-t border-slate-200 bg-white/80">
+    <footer className="mt-10 border-t border-slate-200 bg-white/85">
       <div className="narrato-shell py-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
@@ -18,21 +18,18 @@ const Footer = () => {
               Explore
             </h4>
             <div className="mt-2 space-y-1 text-sm">
-              <Link
-                to="/"
-                className="block text-slate-700 hover:text-orange-700"
-              >
+              <Link to="/" className="block text-slate-700 hover:text-teal-800">
                 Home
               </Link>
               <Link
                 to="/about"
-                className="block text-slate-700 hover:text-orange-700"
+                className="block text-slate-700 hover:text-teal-800"
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="block text-slate-700 hover:text-orange-700"
+                className="block text-slate-700 hover:text-teal-800"
               >
                 Contact
               </Link>
@@ -46,13 +43,13 @@ const Footer = () => {
             <div className="mt-2 space-y-1 text-sm">
               <Link
                 to="/login"
-                className="block text-slate-700 hover:text-orange-700"
+                className="block text-slate-700 hover:text-teal-800"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="block text-slate-700 hover:text-orange-700"
+                className="block text-slate-700 hover:text-teal-800"
               >
                 Register
               </Link>

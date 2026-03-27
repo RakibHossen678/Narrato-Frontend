@@ -7,14 +7,14 @@ const Home = () => {
   const blogs = data?.data || [];
 
   return (
-    <div className="narrato-shell">
-      <section className="narrato-card mb-6 overflow-hidden p-6 md:p-10">
-        <div className="grid gap-6 md:grid-cols-2 md:items-center">
+    <div className="narrato-shell narrato-section">
+      <section className="narrato-card surface-soft mb-7 overflow-hidden p-6 md:p-10">
+        <div className="grid gap-8 md:grid-cols-2 md:items-center">
           <div>
-            <p className="mb-3 inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-700">
+            <p className="mb-3 inline-flex rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">
               Narrato Feed
             </p>
-            <h1 className="text-4xl font-black leading-tight md:text-5xl">
+            <h1 className="text-4xl font-black leading-tight text-slate-900 md:text-5xl">
               Write boldly.
               <br />
               Discuss deeply.
@@ -25,7 +25,7 @@ const Home = () => {
               with your community.
             </p>
           </div>
-          <div className="rounded-2xl border border-orange-200 bg-orange-50 p-5">
+          <div className="rounded-2xl border border-teal-200 bg-teal-50 p-5">
             <h2 className="text-lg font-bold text-slate-900">
               Explore by intent
             </h2>
@@ -45,7 +45,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           {isLoading ? (
             <div className="narrato-card p-8 text-center text-slate-500">

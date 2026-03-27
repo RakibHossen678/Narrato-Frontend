@@ -27,7 +27,7 @@ const Header = () => {
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
       <div className="narrato-shell flex h-16 items-center justify-between gap-4 py-0">
         <Link to="/" className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-orange-600 font-black text-white">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-teal-700 font-black text-white shadow-sm">
             N
           </span>
           <span className="text-lg font-black tracking-tight text-slate-900">
@@ -43,7 +43,7 @@ const Header = () => {
               className={({ isActive }) =>
                 `rounded-md px-3 py-2 text-sm font-medium transition ${
                   isActive
-                    ? "bg-orange-100 text-orange-700"
+                    ? "bg-teal-100 text-teal-800"
                     : "text-slate-700 hover:bg-slate-100"
                 }`
               }
@@ -83,7 +83,7 @@ const Header = () => {
               </Link>
               <Link
                 to="/register"
-                className="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-700"
+                className="rounded-md bg-teal-700 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-800"
               >
                 Sign Up
               </Link>
@@ -111,7 +111,7 @@ const Header = () => {
                 className={({ isActive }) =>
                   `block rounded-md px-3 py-2 text-sm font-medium ${
                     isActive
-                      ? "bg-orange-100 text-orange-700"
+                      ? "bg-teal-100 text-teal-800"
                       : "text-slate-700 hover:bg-slate-100"
                   }`
                 }
@@ -151,7 +151,7 @@ const Header = () => {
                 <Link
                   to="/register"
                   onClick={() => setOpen(false)}
-                  className="rounded-md bg-orange-600 px-3 py-2 text-center text-sm font-semibold text-white"
+                  className="rounded-md bg-teal-700 px-3 py-2 text-center text-sm font-semibold text-white"
                 >
                   Sign Up
                 </Link>
