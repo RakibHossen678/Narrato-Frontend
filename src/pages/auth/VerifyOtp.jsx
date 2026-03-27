@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import apiRequestHandler from "../../services/ApiRequestHandler";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
+import { motion as Motion } from "framer-motion";
+import PageTransition from "../../components/common/animations/PageTransition";
 
 const VerifyOtp = () => {
   const { handleSubmit, reset, control, setValue, trigger } = useForm();
@@ -89,67 +91,74 @@ const VerifyOtp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen font-jakarta px-4">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="py-10 md:px-6 px-5 shadow-[0px_4px_25px_0px_rgba(0,0,0,0.05)] rounded-2xl border border-border max-w-md w-full"
-      >
-        <h2 className="text-2xl text-secondary font-semibold mb-4 text-center">
-          Verify your OTP
-        </h2>
-        <p className="text-tertiary text-sm mb-8 text-center">
-          We just sent a 6-digit code to <br />
-          {email}, enter it below
-        </p>
-        <p className="text-tertiary text-sm mb-2">Code</p>
-        <div className="flex  items-center gap-2 mb-2 ">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="flex items-center">
-              <Controller
-                name={`digit${index + 1}`}
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    ref={(el) => (inputsRef.current[index] = el)}
-                    maxLength={1}
-                    inputMode="numeric"
-                    onChange={(e) => handleInput(e, index)}
-                    onPaste={(e) => handlePaste(e, index)}
-                    className="w-[42px] h-[42px] sm:w-[50px] sm:h-[50px] text-xl text-center bg-background-secondary rounded-sm outline-none"
-                  />
-                )}
-              />
-              {index === 2 && (
-                <span className="text-sm text-[#191C4D] mx-1">-</span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <p className="text-xs text-tertiary mt-2">This field is required</p>
-
-        <p className="text-xs text-tertiary text-center my-6">
-          Don’t see a code?{" "}
-          <button
-            type="button"
-            onClick={() => alert("Resent!")}
-            className="text-[#00A46B] font-medium"
-          >
-            Resend to email
-          </button>
-        </p>
-
-        <button
-          type="submit"
-          className="w-full py-4 bg-primary text-sm font-semibold text-background rounded-md cursor-pointer"
-          disabled={mutation.isPending}
+    <PageTransition>
+      <section className="auth-shell px-4">
+        <Motion.form
+          onSubmit={handleSubmit(onSubmit)}
+          className="auth-card max-w-md"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
         >
-          {mutation.isPending ? "Verifying..." : "Verify OTP"}
-        </button>
-      </form>
-    </div>
+          <h2 className="auth-title mb-3 text-center text-[1.45rem] md:text-[1.75rem]">
+            Verify your OTP
+          </h2>
+          <p className="auth-subtitle mb-7 text-center">
+            We just sent a 6-digit code to <br />
+            <span className="text-slate-200">{email}</span>, enter it below
+          </p>
+          <p className="auth-label mb-2">Code</p>
+
+          <div className="mb-2 flex items-center justify-center gap-2">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="flex items-center">
+                <Controller
+                  name={`digit${index + 1}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      ref={(el) => (inputsRef.current[index] = el)}
+                      maxLength={1}
+                      inputMode="numeric"
+                      onChange={(e) => handleInput(e, index)}
+                      onPaste={(e) => handlePaste(e, index)}
+                      className="auth-input h-[46px] w-[40px] px-0 text-center text-xl sm:h-[52px] sm:w-[48px]"
+                      aria-label={`OTP digit ${index + 1}`}
+                    />
+                  )}
+                />
+                {index === 2 && (
+                  <span className="mx-1 text-sm text-slate-500">-</span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <p className="text-danger mt-2 text-xs">This field is required</p>
+
+          <p className="my-6 text-center text-xs text-slate-400">
+            Don&apos;t see a code?{" "}
+            <button
+              type="button"
+              onClick={() => alert("Resent!")}
+              className="text-cyan-200 font-medium"
+            >
+              Resend to email
+            </button>
+          </p>
+
+          <button
+            type="submit"
+            className="focus-ring w-full rounded-xl bg-teal-500 py-3 text-sm font-semibold text-[#032722] hover:bg-teal-400"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? "Verifying..." : "Verify OTP"}
+          </button>
+        </Motion.form>
+      </section>
+    </PageTransition>
   );
 };
 

@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
+import { AnimatePresence } from "framer-motion";
 import Home from "../pages/public/Home";
 import About from "../pages/public/About";
 import Contact from "../pages/public/Contact";
@@ -12,23 +13,27 @@ import DashboardLayout from "../components/layouts/DashboardLayout";
 import AdminHome from "../pages/dashboard/admin/AdminHome";
 
 const Router = () => {
+  const location = useLocation();
+
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-        <Route path="forget-password" element={<ForgotPassword />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="verify-otp" element={<VerifyOtp />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-      </Route>
-      <Route path="dashboard" element={<DashboardLayout />}>
-        <Route index element={<AdminHome />} />
-      </Route>
-    </Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="forget-password" element={<ForgotPassword />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="verify-otp" element={<VerifyOtp />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+        </Route>
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<AdminHome />} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
   );
 };
 

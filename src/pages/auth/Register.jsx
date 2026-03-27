@@ -7,6 +7,8 @@ import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { motion as Motion } from "framer-motion";
+import PageTransition from "../../components/common/animations/PageTransition";
 
 const Register = () => {
   const {
@@ -82,39 +84,41 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen font-jakarta">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg lg:max-w-4xl">
-        <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
-          <h1 className="md:text-2xl text-[18px] font-semibold text-secondary pb-4">
+    <PageTransition>
+      <section className="auth-shell">
+        <Motion.div
+          className="auth-card"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+        >
+          <h1 className="auth-title text-[1.45rem] md:text-[1.75rem]">
             Create Account
           </h1>
+          <p className="auth-subtitle mt-2">
+            Start your publishing journey with Narrato.
+          </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="md:mt-4 mt-2">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
             <div>
-              <label
-                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
-                htmlFor="email"
-              >
+              <label className="auth-label" htmlFor="email">
                 Email Address
               </label>
               <input
                 id="email"
                 type="email"
                 {...register("email", { required: "Email is required" })}
-                className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 rounded-lg"
+                className="auth-input"
               />
               {errors.email && (
-                <p className="mt-1 text-xs text-red-600">
+                <p className="text-danger mt-1 text-xs">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
-            <div className="lg:mt-8 md:mt-6 mt-3">
-              <label
-                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
-                htmlFor="password"
-              >
+            <div>
+              <label className="auth-label" htmlFor="password">
                 Password
               </label>
               <div className="relative">
@@ -128,12 +132,13 @@ const Register = () => {
                       message: "Password must be at least 8 characters",
                     },
                   })}
-                  className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg"
+                  className="auth-input pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-slate-300 hover:text-white"
                 >
                   {showPassword ? (
                     <AiOutlineEyeInvisible size={20} />
@@ -143,17 +148,14 @@ const Register = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-red-600">
+                <p className="text-danger mt-1 text-xs">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
-            <div className="lg:mt-8 md:mt-6 mt-3">
-              <label
-                className="block mb-1.5 text-xs md:text-sm text-[#363636]"
-                htmlFor="confirmPassword"
-              >
+            <div>
+              <label className="auth-label" htmlFor="confirmPassword">
                 Confirm Password
               </label>
               <div className="relative">
@@ -163,12 +165,17 @@ const Register = () => {
                   {...register("confirmPassword", {
                     required: "Confirm Password is required",
                   })}
-                  className="bg-background-secondary outline-none border border-border w-full h-12 md:h-14 pl-4 pr-12 rounded-lg"
+                  className="auth-input pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                  aria-label={
+                    showConfirmPassword
+                      ? "Hide confirm password"
+                      : "Show confirm password"
+                  }
+                  className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-slate-300 hover:text-white"
                 >
                   {showConfirmPassword ? (
                     <AiOutlineEyeInvisible size={20} />
@@ -178,56 +185,50 @@ const Register = () => {
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="mt-1 text-xs text-red-600">
+                <p className="text-danger mt-1 text-xs">
                   {errors.confirmPassword.message}
                 </p>
               )}
             </div>
 
-            <div className="mt-4 flex justify-center">
+            <div className="mt-2 flex justify-center rounded-xl border border-[#2a3958] bg-[#0d1830] p-3">
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setRecaptchaToken(token)}
               />
             </div>
 
-            <div className="mt-6 md:mt-8">
-              <button
-                type="submit"
-                className="w-full cursor-pointer py-4 bg-primary text-sm font-semibold text-background rounded-md"
-                disabled={registerMutation.isPending}
-              >
-                {registerMutation.isPending ? "Creating..." : "Create Account"}
-              </button>
+            <button
+              type="submit"
+              className="focus-ring mt-2 w-full rounded-xl bg-teal-500 py-3 text-sm font-semibold text-[#032722] hover:bg-teal-400"
+              disabled={registerMutation.isPending}
+            >
+              {registerMutation.isPending ? "Creating..." : "Create Account"}
+            </button>
+
+            <div className="flex items-center gap-3 pt-1">
+              <span className="h-px flex-1 bg-[#2a3958]" />
+              <span className="text-xs text-slate-400">or</span>
+              <span className="h-px flex-1 bg-[#2a3958]" />
             </div>
 
-            <div className="flex items-center justify-between md:mt-6 mt-4">
-              <span className="border-b-[#C8C8C8] border-b w-[40%]"></span>
-              <span className="text-xs text-tertiary">or</span>
-              <span className="border-b-[#C8C8C8] border-b w-[40%]"></span>
-            </div>
-
-            <p className="text-sm text-tertiary max-w-[250px] text-center mx-auto mb-6">
+            <p className="mx-auto max-w-[280px] text-center text-sm text-slate-300">
               By continuing you agree to the{" "}
-              <span className="text-primary underline font-medium">
-                Privacy Policy
-              </span>{" "}
+              <span className="text-cyan-200 underline">Privacy Policy</span>{" "}
               and{" "}
-              <span className="text-primary underline font-medium">
-                Terms & Condition
-              </span>
+              <span className="text-cyan-200 underline">Terms & Condition</span>
             </p>
 
-            <p className="text-center text-tertiary text-sm">
+            <p className="text-center text-sm text-slate-300">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary underline">
+              <Link to="/login" className="text-cyan-200 underline">
                 Sign in
               </Link>
             </p>
           </form>
-        </div>
-      </div>
-    </div>
+        </Motion.div>
+      </section>
+    </PageTransition>
   );
 };
 

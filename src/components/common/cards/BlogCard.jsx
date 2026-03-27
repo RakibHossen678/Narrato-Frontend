@@ -1,4 +1,5 @@
 import AppButton from "../buttons/AppButton";
+import { motion as Motion } from "framer-motion";
 
 const BlogCard = ({ blog, onLike, onBookmark, onShare }) => {
   const author = blog?.author || "Unknown Author";
@@ -10,14 +11,21 @@ const BlogCard = ({ blog, onLike, onBookmark, onShare }) => {
         day: "numeric",
       })
     : "Draft";
+  const tags = Array.isArray(blog?.tags) ? blog.tags : [];
 
   return (
-    <article className="blog-card">
+    <Motion.article
+      className="blog-card"
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.35 }}
+    >
       <div className="mb-3 flex flex-wrap gap-2">
-        {blog.tags.slice(0, 4).map((tag) => (
+        {tags.slice(0, 4).map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+            className="rounded-full bg-[#1a2944] px-3 py-1 text-xs font-semibold text-slate-200"
           >
             #{tag}
           </span>
@@ -27,7 +35,7 @@ const BlogCard = ({ blog, onLike, onBookmark, onShare }) => {
       <h3 className="blog-title line-clamp-2">{blog.title}</h3>
 
       <div className="blog-meta">
-        <span className="font-semibold text-slate-700">{author}</span>
+        <span className="font-semibold text-slate-200">{author}</span>
         <span aria-hidden="true">•</span>
         <span>{dateLabel}</span>
         <span aria-hidden="true">•</span>
@@ -38,7 +46,7 @@ const BlogCard = ({ blog, onLike, onBookmark, onShare }) => {
         {blog.excerpt || "No excerpt provided."}
       </p>
 
-      <div className="mt-5 flex flex-wrap gap-2 border-t border-slate-200 pt-4">
+      <div className="mt-5 flex flex-wrap gap-2 border-t border-[#2b3a57] pt-4">
         <AppButton
           variant="ghost"
           className="blog-button"
@@ -51,17 +59,17 @@ const BlogCard = ({ blog, onLike, onBookmark, onShare }) => {
           className="blog-button"
           onClick={() => onBookmark?.(blog.blogId)}
         >
-          Bookmark {blog.bookmarkCount}
+          Bookmark {blog.bookmarkCount || 0}
         </AppButton>
         <AppButton
           variant="ghost"
           className="blog-button"
           onClick={() => onShare?.(blog.blogId)}
         >
-          Share {blog.shareCount}
+          Share {blog.shareCount || 0}
         </AppButton>
       </div>
-    </article>
+    </Motion.article>
   );
 };
 

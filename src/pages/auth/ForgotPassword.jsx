@@ -3,6 +3,8 @@ import apiRequestHandler from "../../services/ApiRequestHandler";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
+import { motion as Motion } from "framer-motion";
+import PageTransition from "../../components/common/animations/PageTransition";
 
 const ForgotPassword = () => {
   // Initialize react-hook-form
@@ -50,49 +52,49 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex items-center  justify-center min-h-screen font-jakarta">
-      <section className="max-w-md max-md:mx-4 ">
-        <form
+    <PageTransition>
+      <section className="auth-shell">
+        <Motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="py-10 md:px-6 px-5 shadow-[0px_4px_25px_0px_rgba(0,0,0,0.05)] rounded-2xl border border-border"
+          className="auth-card"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
         >
-          <h1 className="text-secondary font-semibold text-[18px] md:text-2xl ">
+          <h1 className="auth-title text-[1.45rem] md:text-[1.75rem]">
             Forget Password
           </h1>
-          <p className="py-3 md:py-4 text-xs md:text-sm text-tertiary">
-            Enter your email, and we'll send you simple steps to reset your
+          <p className="auth-subtitle py-3 md:py-4">
+            Enter your email, and we&apos;ll send you simple steps to reset your
             password.
           </p>
-          <hr className="border-none h-[1px] bg-border md:mb-10 mb-6" />
-          <div className="mb-6 md:mb-8">
-            <label
-              className="block mb-1.5 text-xs md:text-sm   text-[#363636]"
-              htmlFor="email"
-            >
+          <hr className="auth-divider mb-6 md:mb-8" />
+
+          <div className="mb-5">
+            <label className="auth-label" htmlFor="email">
               Email Address
             </label>
             <input
               id="email"
               type="email"
               {...register("email", { required: "Email is required" })}
-              className={`bg-background-secondary  outline-none border-[1px] border-border w-full h-[48px] md:h-[56px] pl-4 rounded-[8px]`}
+              className="auth-input"
             />
             {errors.email && (
-              <p className="mt-1 text-xs text-red-600">
-                {errors.email.message}
-              </p>
+              <p className="text-danger mt-1 text-xs">{errors.email.message}</p>
             )}
           </div>
+
           <button
             type="submit"
-            className="w-full py-4 bg-primary text-sm font-semibold text-background rounded-md cursor-pointer"
+            className="focus-ring w-full rounded-xl bg-teal-500 py-3 text-sm font-semibold text-[#032722] hover:bg-teal-400"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "  Sending..." : "Send"}
+            {mutation.isPending ? "Sending..." : "Send"}
           </button>
-        </form>
+        </Motion.form>
       </section>
-    </div>
+    </PageTransition>
   );
 };
 

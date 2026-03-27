@@ -5,6 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { motion as Motion } from "framer-motion";
+import PageTransition from "../../components/common/animations/PageTransition";
 
 const ResetPassword = () => {
   // Initialize react-hook-form
@@ -75,24 +77,25 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex items-center  justify-center min-h-screen font-jakarta">
-      <section className="max-w-md max-md:mx-4 ">
-        <form
+    <PageTransition>
+      <section className="auth-shell">
+        <Motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="py-10 md:px-6 px-5 shadow-[0px_4px_25px_0px_rgba(0,0,0,0.05)] rounded-2xl border border-border"
+          className="auth-card max-w-md"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
         >
-          <h1 className="text-secondary font-semibold text-[18px] md:text-2xl ">
+          <h1 className="auth-title text-[1.45rem] md:text-[1.75rem]">
             Reset Password
           </h1>
-          <p className="py-3 md:py-4 text-xs md:text-sm text-tertiary">
+          <p className="auth-subtitle py-3 md:py-4">
             Set a strong new password for your account.
           </p>
-          <hr className="border-none h-[1px] bg-border md:mb-10 mb-6" />
+          <hr className="auth-divider mb-6 md:mb-8" />
+
           <div className="mb-3">
-            <label
-              className="block mb-1.5 text-xs md:text-sm   text-[#363636]"
-              htmlFor="newPassword"
-            >
+            <label className="auth-label" htmlFor="newPassword">
               New Password
             </label>
             <div className="relative">
@@ -102,12 +105,15 @@ const ResetPassword = () => {
                 {...register("newPassword", {
                   required: "New Password is required",
                 })}
-                className={`bg-background-secondary  outline-none border-[1px] border-border w-full h-[48px] md:h-[56px] pl-4 pr-12 rounded-[8px]`}
+                className="auth-input pr-12"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                aria-label={
+                  showPassword ? "Hide new password" : "Show new password"
+                }
+                className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-slate-300 hover:text-white"
               >
                 {showPassword ? (
                   <AiOutlineEyeInvisible size={20} />
@@ -117,16 +123,14 @@ const ResetPassword = () => {
               </button>
             </div>
             {errors.newPassword && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="text-danger mt-1 text-xs">
                 {errors.newPassword.message}
               </p>
             )}
           </div>
+
           <div className="mb-6 md:mb-8">
-            <label
-              className="block mb-1.5 text-xs md:text-sm   text-[#363636]"
-              htmlFor="confirmPassword"
-            >
+            <label className="auth-label" htmlFor="confirmPassword">
               Confirm Password
             </label>
             <div className="relative">
@@ -136,12 +140,17 @@ const ResetPassword = () => {
                 {...register("confirmPassword", {
                   required: "Confirm Password is required",
                 })}
-                className={`bg-background-secondary  outline-none border-[1px] border-border w-full h-[56px] pl-4 pr-12 rounded-[8px]`}
+                className="auth-input pr-12"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
+                className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-slate-300 hover:text-white"
               >
                 {showConfirmPassword ? (
                   <AiOutlineEyeInvisible size={20} />
@@ -151,21 +160,22 @@ const ResetPassword = () => {
               </button>
             </div>
             {errors.confirmPassword && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="text-danger mt-1 text-xs">
                 {errors.confirmPassword.message}
               </p>
             )}
           </div>
+
           <button
             type="submit"
-            className="w-full py-4 bg-primary text-sm font-semibold text-background rounded-md cursor-pointer"
+            className="focus-ring w-full rounded-xl bg-teal-500 py-3 text-sm font-semibold text-[#032722] hover:bg-teal-400"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "  Sending..." : "Send"}
+            {mutation.isPending ? "Sending..." : "Send"}
           </button>
-        </form>
+        </Motion.form>
       </section>
-    </div>
+    </PageTransition>
   );
 };
 

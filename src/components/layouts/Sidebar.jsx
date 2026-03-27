@@ -6,15 +6,15 @@ const LinkBase = ({ to, children, isActive }) => (
     to={to}
     className={({ isActive: active }) =>
       `group flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors ${
-        active ?? isActive
-          ? "bg-gray-100 text-gray-900"
-          : "text-gray-700 hover:bg-gray-50"
+        (active ?? isActive)
+          ? "bg-[#173756] text-cyan-100"
+          : "text-slate-300 hover:bg-[#152640]"
       }`
     }
   >
     <span
       className={`inline-block w-1.5 h-1.5 rounded-full ${
-        isActive ? "bg-blue-600" : "bg-transparent group-hover:bg-gray-300"
+        isActive ? "bg-cyan-300" : "bg-transparent group-hover:bg-slate-400"
       }`}
     />
     <span>{children}</span>
@@ -23,7 +23,7 @@ const LinkBase = ({ to, children, isActive }) => (
 
 const SidebarSection = ({ title, items }) => (
   <div className="mb-6">
-    <p className="px-3 text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">
+    <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
       {title}
     </p>
     <ul className="space-y-1">
@@ -39,8 +39,8 @@ const SidebarSection = ({ title, items }) => (
                     className={({ isActive }) =>
                       `block px-3 py-1 rounded-md text-sm transition-colors ${
                         isActive
-                          ? "bg-gray-100 text-gray-900"
-                          : "text-gray-600 hover:bg-gray-50"
+                          ? "bg-[#173756] text-cyan-100"
+                          : "text-slate-300 hover:bg-[#152640]"
                       }`
                     }
                   >
@@ -59,11 +59,11 @@ const SidebarSection = ({ title, items }) => (
 const Sidebar = ({ role = "admin" }) => {
   const data = role === "user" ? sectionsForUser : sections;
   return (
-    <aside className="h-screen sticky top-0 border-r border-gray-200 bg-white/80 backdrop-blur overflow-y-auto">
-      <div className="h-14 flex items-center px-4 border-b border-gray-200">
+    <aside className="sticky top-0 h-screen overflow-y-auto border-r border-[#26324a] bg-[#0c1425]/94 backdrop-blur">
+      <div className="flex h-14 items-center border-b border-[#26324a] px-4">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-blue-600" />
-          <span className="font-semibold">App Admin</span>
+          <div className="h-6 w-6 rounded bg-teal-500" />
+          <span className="font-semibold text-slate-100">Narrato Admin</span>
         </div>
       </div>
       <nav className="p-3">
