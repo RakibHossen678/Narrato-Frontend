@@ -1,0 +1,48 @@
+export const blogShape = {
+  blogId: "",
+  userId: "",
+  title: "",
+  slug: "",
+  excerpt: "",
+  content: "",
+  image: "",
+  tags: [],
+  isPublished: false,
+  isPaid: false,
+  price: 0,
+  author: "",
+  authorBio: "",
+  designation: "",
+  readTimeMinutes: 1,
+  upvotesCount: 0,
+  downvotesCount: 0,
+  score: 0,
+  bookmarkCount: 0,
+  shareCount: 0,
+  commentCount: 0,
+  viewCount: 0,
+  createdAt: "",
+  updatedAt: "",
+};
+
+export const blogPayloadShape = {
+  title: "",
+  content: "",
+  excerpt: "",
+  image: "",
+  tags: [],
+  isPublished: false,
+  isPaid: false,
+  price: 0,
+};
+
+export const blogQueryShape = {
+  page: 1,
+  limit: 10,
+  tag: "",
+  authorId: "",
+  search: "",
+  from: "",
+  to: "",
+  sortBy: "latest",
+};

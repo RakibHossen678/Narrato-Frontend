@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+:root {
+  --bg: #f5f6f8;
+  --ink: #0f172a;
+  --muted: #475569;
+  --panel: #ffffff;
+  --accent: #ea580c;
+  --accent-soft: #fff7ed;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(251, 191, 36, 0.15),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(251, 146, 60, 0.12),
+      transparent 28%
+    ),
+    var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.narrato-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.narrato-card {
+  background: var(--panel);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1rem;
+}
