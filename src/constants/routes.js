@@ -7,6 +7,10 @@ export const sections = [
         path: "/dashboard",
       },
       {
+        label: "Create Blog",
+        path: "/dashboard/create-blog",
+      },
+      {
         label: "Client",
         path: "/client",
       },

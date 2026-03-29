@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const AdminHome = () => {
   return (
     <div className="space-y-4">
@@ -6,6 +8,21 @@ const AdminHome = () => {
         Monitor users, content moderation reports, and platform activity in one
         place.
       </p>
+
+      <div className="flex flex-wrap gap-3">
+        <Link
+          to="/dashboard/create-blog"
+          className="focus-ring rounded-xl bg-teal-500 px-4 py-2 text-sm font-semibold text-[#032722] hover:bg-teal-400"
+        >
+          Create New Blog
+        </Link>
+        <Link
+          to="/"
+          className="focus-ring rounded-xl border border-[#344764] px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-[#152640]"
+        >
+          View Public Blog Feed
+        </Link>
+      </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <article className="blog-card">

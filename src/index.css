@@ -2,32 +2,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
 
 :root {
-  --bg: #060b16;
-  --bg-soft: #0d1424;
-  --ink: #e6eefb;
-  --muted: #9caac4;
-  --panel: #111a2d;
-  --panel-soft: #131f34;
-  --accent: #14b8a6;
-  --accent-soft: rgba(20, 184, 166, 0.14);
-  --border: #26324a;
+  --bg: #050a12;
+  --ink: #e4ecf7;
+  --muted: #9cb0cd;
+  --panel: #0d1523;
+  --panel-soft: #101b2f;
+  --accent: #24c3a4;
+  --accent-soft: rgba(36, 195, 164, 0.14);
+  --border: #273650;
   --ring: #2dd4bf;
-  --danger: #ef4444;
   --headline-font: "Space Grotesk", "Segoe UI", sans-serif;
   --body-font: "Manrope", "Segoe UI", sans-serif;
 }
 
 body {
   background:
-    radial-gradient(circle at 8% 5%, rgba(45, 212, 191, 0.16), transparent 30%),
+    radial-gradient(circle at 8% 5%, rgba(45, 212, 191, 0.18), transparent 32%),
     radial-gradient(
       circle at 90% 0%,
-      rgba(59, 130, 246, 0.14),
-      transparent 28%
+      rgba(56, 189, 248, 0.13),
+      transparent 34%
     ),
     radial-gradient(
       circle at 50% 90%,
-      rgba(20, 184, 166, 0.1),
+      rgba(20, 184, 166, 0.08),
       transparent 42%
     ),
     var(--bg);
@@ -50,188 +48,11 @@ h6 {
   min-height: 100vh;
 }
 
-.narrato-shell {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-@media (min-width: 768px) {
-  .narrato-shell {
-    padding: 1.25rem;
-  }
-}
-
-.narrato-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: 0 10px 28px rgba(3, 8, 20, 0.45);
-}
-
-.narrato-section {
-  margin-block: 1rem;
-}
-
-@media (min-width: 768px) {
-  .narrato-section {
-    margin-block: 1.5rem;
-  }
-}
-
-.blog-card {
-  background-color: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.25rem;
-  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.36);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.blog-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(2, 6, 23, 0.55);
-  border-color: #355179;
-}
-
-.blog-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #f8fafc;
-  margin-bottom: 8px;
-  line-height: 1.25;
-}
-
-.blog-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.84rem;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-
-.blog-content {
-  font-size: 0.98rem;
-  color: #c8d3ea;
-}
-
-.blog-button {
-  background-color: #16253f;
-  color: #d6e6ff;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 6px 12px;
-  margin-right: 8px;
-  transition: all 0.2s ease-in-out;
-}
-
-.blog-button:hover {
-  background-color: var(--accent-soft);
-  border-color: var(--ring);
-  color: #e8fffd;
-}
-
-.surface-soft {
-  background: linear-gradient(
-    160deg,
-    rgba(19, 31, 52, 0.9) 0%,
-    rgba(16, 27, 47, 0.92) 100%
-  );
-  border: 1px solid var(--border);
-}
-
-.focus-ring:focus-visible {
-  outline: 3px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.auth-shell {
-  min-height: calc(100vh - 144px);
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 460px;
-  background: linear-gradient(
-    160deg,
-    rgba(17, 26, 45, 0.95),
-    rgba(12, 21, 39, 0.96)
-  );
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: 0 18px 40px rgba(2, 8, 24, 0.6);
-  padding: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .auth-card {
-    padding: 2rem;
-  }
-}
-
-.auth-title {
-  color: #f8fafc;
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-.auth-subtitle {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.auth-label {
-  display: block;
-  margin-bottom: 0.4rem;
-  color: #c9d6f0;
-  font-size: 0.86rem;
-  font-weight: 600;
-}
-
-.auth-input {
-  width: 100%;
-  min-height: 46px;
-  border: 1px solid #2f3c56;
-  background: #0f192d;
-  color: #eff6ff;
-  border-radius: 0.72rem;
-  padding: 0.72rem 0.9rem;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.auth-input::placeholder {
-  color: #7183a5;
-}
-
-.auth-input:focus {
-  outline: none;
-  border-color: var(--ring);
-  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.22);
-}
-
-.auth-divider {
-  border: 0;
-  border-top: 1px solid #2a3958;
-}
-
-.text-danger {
-  color: #fca5a5;
-}
-
-.muted-link {
-  color: #93a4c4;
-}
-
-.muted-link:hover {
-  color: #d9e9ff;
+.light {
+  --bg: #f6f8fb;
+  --ink: #0f172a;
+  --muted: #4b5563;
+  --panel: #ffffff;
+  --panel-soft: #f8fafc;
+  --border: #d6e1ee;
 }

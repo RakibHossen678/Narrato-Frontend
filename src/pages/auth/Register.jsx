@@ -5,7 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { motion as Motion } from "framer-motion";
 import PageTransition from "../../components/common/animations/PageTransition";
@@ -20,7 +19,6 @@ const Register = () => {
 
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -56,11 +54,6 @@ const Register = () => {
   });
 
   const onSubmit = (data) => {
-    if (!recaptchaToken) {
-      toast.error("Please verify that you're not a robot");
-      return;
-    }
-
     if (data?.password !== data?.confirmPassword) {
       toast.error("Password does not match");
       return;
@@ -77,7 +70,6 @@ const Register = () => {
       userName: generatedUserName,
       email: normalizedEmail,
       password: data?.password,
-      recaptchaToken,
     };
 
     registerMutation.mutate(userData);
@@ -189,13 +181,6 @@ const Register = () => {
                   {errors.confirmPassword.message}
                 </p>
               )}
-            </div>
-
-            <div className="mt-2 flex justify-center rounded-xl border border-[#2a3958] bg-[#0d1830] p-3">
-              <ReCAPTCHA
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                onChange={(token) => setRecaptchaToken(token)}
-              />
             </div>
 
             <button

@@ -11,6 +11,7 @@ import VerifyOtp from "../pages/auth/VerifyOtp";
 import ResetPassword from "../pages/auth/ResetPassword";
 import DashboardLayout from "../components/layouts/DashboardLayout";
 import AdminHome from "../pages/dashboard/admin/AdminHome";
+import CreateBlog from "../pages/dashboard/admin/CreateBlog";
 
 const Router = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const Router = () => {
         </Route>
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<AdminHome />} />
+          <Route path="create-blog" element={<CreateBlog />} />
         </Route>
       </Routes>
     </AnimatePresence>
